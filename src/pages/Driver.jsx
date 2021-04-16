@@ -1,30 +1,48 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {PageContainer} from '@ant-design/pro-layout';
 import {Card, Alert, Typography} from 'antd';
 import {MapboxScene, HeatmapLayer} from '@antv/l7-react';
-import {useIntl, FormattedMessage} from 'umi';
+import {useIntl, FormattedMessage, connect} from 'umi';
 import styles from './Driver.less';
 
-export default () => {
+let layer = null;
+let scene = null;
+
+const DriverPage = (props) => {
   const dd = {
     type: "FeatureCollection",
     crs: {
-      type: "link",
-      properties: {href: "https://spatialreference.org/ref/sr-org/google-projection/proj4", type: "proj4"}
+      type: "name",
+      properties: {
+        name: "urn:ogc:def:crs:OGC:1.3:CRS84"
+      }
     },
-    features: [{
-      type: "Feature",
-      properties: {mag: 6, time: 1519974852000},
-      geometry: {type: "Point", coordinates: [-74.04509616544428, 40.689627459655405, 0]}
-    }, {
-      type: "Feature",
-      properties: {mag: 4, time: 1519974816000},
-      geometry: {type: "Point", coordinates: [-74.04509616544428, 40.689627459655405, 0]}
-    }]
+    features: []
   };
+  const [activeHeap, setActiveHeap] = useState("current");
+
+  const {dispatch, pageData} = props;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch({
+        type: 'driverPage/fetch',
+        payload: scene === null ? {lng: -73.8713099, lat: 40.6056632} : scene.getCenter()
+      });
+    }, 2500);
+
+    return () => {
+      clearTimeout(timer)
+    }
+  });
 
   return (
-    <PageContainer>
+    <PageContainer
+      title={"周边需求热力图"}
+      tabList={[{key: "last", tab: "last"}, {key: "current", tab: "current"}, {key: "predict", tab: "predict"}]}
+      tabActiveKey={activeHeap}
+      onTabChange={(v)=>{setActiveHeap(v)}}
+    >
       <Card>
         <MapboxScene
           id={"map"}
@@ -33,19 +51,19 @@ export default () => {
             style: 'light',
             pitch: 0,
             center: [-74.04509616544428, 40.689627459655405],
-            zoom: 7.632456779444394,
+            zoom: 10.632456779444394,
             // token: '',
           }}
           style={{
-            width: "500px",
+            width: "100%",
             minHeight: "500px",
-            minWidth: "1000px",
+            // minWidth: "1000px",
             justifyContent: "center",
             position: "relative"
           }}
         >
           <HeatmapLayer
-            source={{data: dd}}
+            source={{data: pageData[activeHeap] || dd}}
             shape='heatmap'
             autoFit={true}
             size={{
@@ -65,8 +83,11 @@ export default () => {
                   '#2EA9A1',
                   '#206C7C'
                 ].reverse(),
-                positions: [ 0, 0.2, 0.4, 0.6, 0.8, 1.0 ]
+                positions: [0, 0.2, 0.4, 0.6, 0.8, 1.0]
               }
+            }}
+            onLayerLoaded={(layer1, scene1) => {
+              scene = scene1;
             }}
           />
         </MapboxScene>
@@ -74,3 +95,7 @@ export default () => {
     </PageContainer>
   );
 };
+
+export default connect(({driverPage}) => ({
+  pageData: driverPage,
+}))(DriverPage);

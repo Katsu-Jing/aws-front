@@ -21,7 +21,7 @@ export default [
           {
             path: '/',
             component: '../layouts/BasicLayout',
-            authority: ['admin', 'user', 'driver', 'operator'],
+            authority: ['operator'],
             routes: [
               {
                 path: '/',
@@ -34,24 +34,18 @@ export default [
                 component: './Welcome',
               },
               {
-                path: '/driver',
-                name: 'driver',
-                icon: 'smile',
-                component: './Driver',
-              },
-              {
                 path: '/admin',
                 name: 'admin',
                 icon: 'crown',
                 component: './Admin',
-                authority: ['admin'],
+                authority: ['driver'],
                 routes: [
                   {
                     path: '/admin/sub-page',
                     name: 'sub-page',
                     icon: 'smile',
                     component: './Welcome',
-                    authority: ['admin'],
+                    authority: ['driver'],
                   },
                 ],
               },
