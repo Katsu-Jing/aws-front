@@ -21,39 +21,21 @@ export default [
           {
             path: '/',
             component: '../layouts/BasicLayout',
-            authority: ['operator'],
+            authority: ['operator', 'driver'],
             routes: [
               {
-                path: '/',
-                redirect: '/welcome',
-              },
-              {
-                path: '/welcome',
-                name: 'welcome',
+                path: '/driver',
+                name: 'driver',
                 icon: 'smile',
-                component: './Welcome',
-              },
-              {
-                path: '/admin',
-                name: 'admin',
-                icon: 'crown',
-                component: './Admin',
                 authority: ['driver'],
-                routes: [
-                  {
-                    path: '/admin/sub-page',
-                    name: 'sub-page',
-                    icon: 'smile',
-                    component: './Welcome',
-                    authority: ['driver'],
-                  },
-                ],
+                component: './Driver',
               },
               {
-                name: 'list.table-list',
-                icon: 'table',
-                path: '/list',
-                component: './TableList',
+                path: '/operator/heatmap',
+                name: 'operator.heatmap',
+                icon: 'crown',
+                authority: ['operator'],
+                component: './OpHeatmap',
               },
               {
                 component: './404',

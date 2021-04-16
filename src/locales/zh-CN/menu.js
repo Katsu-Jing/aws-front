@@ -49,5 +49,6 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
-  'menu.driver': '司机端热力图'
+  'menu.driver': '司机端热力图',
+  'menu.operator.heatmap': '全量需求热力图'
 };

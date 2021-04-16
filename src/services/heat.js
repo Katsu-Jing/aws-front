@@ -7,8 +7,8 @@ export async function driverHeat(params) {
   });
 }
 
-export async function accountLogout() {
-  return request('/api/v1/auth/logout', {
-    method: 'POST',
+export async function opHeat() {
+  return request('/api/v1/realtime/operator_view/counter/ant', {
+    method: 'POST'
   });
 }

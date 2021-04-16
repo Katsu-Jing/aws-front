@@ -4,6 +4,11 @@ const GlobalModel = {
   state: {
     collapsed: false,
     notices: [],
+    authority: {
+      '/driver': ['driver'],
+      '/operator/heatmap': ['operator'],
+      '/operator/select': ['operator']
+    }
   },
   effects: {
     *fetchNotices(_, { call, put, select }) {

@@ -1,9 +1,17 @@
-import { Button, Result } from 'antd';
+import {Button, Result} from 'antd';
 import React from 'react';
-import { history } from 'umi';
+import {history, Redirect} from 'umi';
+import {getAuthority} from "@/utils/authority";
 
-const NoFoundPage = () => (
-  <Result
+const NoFoundPage = () => {
+  const authority = getAuthority();
+  if (authority === 'driver') {
+    return <Redirect to={'/driver'}/>
+  }
+  if (authority === 'operator') {
+    return <Redirect to={'/operator/heatmap'}/>
+  }
+  return (<Result
     status="404"
     title="404"
     subTitle="Sorry, the page you visited does not exist."
@@ -12,7 +20,7 @@ const NoFoundPage = () => (
         Back Home
       </Button>
     }
-  />
-);
+  />)
+};
 
 export default NoFoundPage;

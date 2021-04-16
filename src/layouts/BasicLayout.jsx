@@ -67,6 +67,7 @@ const BasicLayout = (props) => {
     dispatch,
     children,
     settings,
+    authority,
     location = {
       pathname: '/',
     },
@@ -90,13 +91,7 @@ const BasicLayout = (props) => {
     }
   }; // get children authority
 
-  const authorized = useMemo(
-    () =>
-      getMatchMenu(location.pathname || '/', menuDataRef.current).pop() || {
-        authority: undefined,
-      },
-    [location.pathname],
-  );
+  const authorized = authority[location.pathname] || undefined;
   const { formatMessage } = useIntl();
   return (
     <ProLayout
@@ -148,7 +143,7 @@ const BasicLayout = (props) => {
         return menuData || [];
       }}
     >
-      <Authorized authority={authorized.authority} noMatch={noMatch}>
+      <Authorized authority={authorized} noMatch={noMatch}>
         {children}
       </Authorized>
     </ProLayout>
@@ -158,4 +153,5 @@ const BasicLayout = (props) => {
 export default connect(({ global, settings }) => ({
   collapsed: global.collapsed,
   settings,
+  authority: global.authority
 }))(BasicLayout);
