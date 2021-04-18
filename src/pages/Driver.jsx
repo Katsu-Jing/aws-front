@@ -27,9 +27,9 @@ const DriverPage = (props) => {
     const timer = setTimeout(() => {
       dispatch({
         type: 'driverPage/fetch',
-        payload: scene === null ? {lng: -73.8713099, lat: 40.6056632} : scene.getCenter()
+        payload: scene === null ? {lng: -73.97380734021966, lat: 40.76241508405226} : scene.getCenter()
       });
-    }, 2500);
+    }, 1000);
 
     return () => {
       clearTimeout(timer)
@@ -50,7 +50,7 @@ const DriverPage = (props) => {
           map={{
             style: 'light',
             pitch: 0,
-            center: [-74.04509616544428, 40.689627459655405],
+            center: [-73.97380734021966, 40.76241508405226],
             zoom: 10.632456779444394,
             // token: '',
           }}

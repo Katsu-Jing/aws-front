@@ -32,9 +32,9 @@ const selectItem = (data) => {
     label={data.name}
     name={data.field_name}
   >
-    <Select placeholder="请选择">
+    <Select placeholder="请选择" allowClear>
       {
-        data.terms.map(it => (
+        (data.terms || []).map(it => (
           <Option value={it.key} key={it.key}>{it.name}</Option>
         ))
       }
@@ -137,6 +137,9 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
 
   const onIntChange = (v) => {
     console.log(v);
+    if (v !== 'day') {
+      form.setFieldsValue({interval: 1});
+    }
     setIntervalUnit(v);
   }
 
@@ -172,7 +175,7 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
                 label="维度一"
                 name="agg_field_1"
               >
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" allowClear>
                   {
                     (fieldsData || [])
                       .filter(item => item.field_type !== 'text')
@@ -220,7 +223,7 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
                 label="维度二"
                 name="agg_field_2"
               >
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" allowClear>
                   {
                     (fieldsData || [])
                       .filter(item => item.field_type === 'terms')
@@ -253,8 +256,6 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
                   <Option value="doc_count">打车次数</Option>
                   <Option value="trip_distance">平均车程</Option>
                   <Option value="total_amount">平均费用</Option>
-                  <Option value="duration">平均时间(s)</Option>
-                  <Option value="speed">平均速度(km/h)</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -278,6 +279,9 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
         </Card>
       </PageContainer>
       <FooterToolbar>
+        <Button onClick={() => form?.resetFields()}>
+          重置
+        </Button>
         <Button type="primary" onClick={() => form?.submit()} loading={submitting}>
           提交
         </Button>

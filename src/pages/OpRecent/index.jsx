@@ -32,9 +32,9 @@ const selectItem = (data) => {
     label={data.name}
     name={data.field_name}
   >
-    <Select placeholder="请选择">
+    <Select placeholder="请选择" allowClear>
       {
-        data.terms.map(it => (
+        (data.terms || []).map(it => (
           <Option value={it.key} key={it.key}>{it.name}</Option>
         ))
       }
@@ -140,7 +140,7 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
   }
 
   const selectAfter = (
-    <Select defaultValue="minute" onChange={onIntChange} style={{width: 80}}>
+    <Select defaultValue="minute" allowClear onChange={onIntChange} style={{width: 80}}>
       <Option value="minute">minute</Option>
       <Option value="hour">hour</Option>
       <Option value="day">day</Option>
@@ -169,7 +169,7 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
                 label="维度一"
                 name="agg_field_1"
               >
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" allowClear>
                   {
                     (fieldsData || [])
                       .filter(item => item.field_type !== 'text')
@@ -217,7 +217,7 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
                 label="维度二"
                 name="agg_field_2"
               >
-                <Select placeholder="请选择">
+                <Select placeholder="请选择" allowClear>
                   {
                     (fieldsData || [])
                       .filter(item => item.field_type === 'terms')
@@ -275,6 +275,9 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
         </Card>
       </PageContainer>
       <FooterToolbar>
+        <Button onClick={() => form?.resetFields()}>
+          重置
+        </Button>
         <Button type="primary" onClick={() => form?.submit()} loading={submitting}>
           提交
         </Button>

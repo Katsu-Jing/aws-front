@@ -26,7 +26,7 @@ const OpHeatmap = (props) => {
       dispatch({
         type: 'opHeat/fetch'
       });
-    }, 5000);
+    }, 1000);
     return () => {
       clearTimeout(timer)
     }
@@ -46,7 +46,7 @@ const OpHeatmap = (props) => {
           map={{
             style: 'light',
             pitch: 0,
-            center: [-74.04509616544428, 40.689627459655405],
+            center: [-73.97380734021966, 40.76241508405226],
             zoom: 10.632456779444394,
             // token: '',
           }}
