@@ -7,7 +7,7 @@ const proSettings = {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Taxi Poc',
+  title: 'Baymax POC',
   pwa: false,
   iconfontUrl: '',
 };
