@@ -115,7 +115,9 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
       if (item !== undefined) {
         setAggType(item.field_type);
         if (item.field_type === 'date') {
-          setIntervalUnit('minute');
+          if (intervalUnit === '') {
+            setIntervalUnit('minute');
+          }
         } else {
           setIntervalUnit('');
         }
@@ -170,7 +172,7 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
                 <Select placeholder="请选择">
                   {
                     (fieldsData || [])
-                      .filter(item => item.field_type !== 'terms' && item.field_type !== 'text')
+                      .filter(item => item.field_type !== 'text')
                       .map((item) => (<Option value={item.field_name} key={item.field_name}>{item.name}</Option>))
                   }
                 </Select>
@@ -191,7 +193,7 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
                 name="interval"
               ><Input placeholder="聚合值" type="number" addonAfter={selectAfter}/>
               </Form.Item>}
-              {aggType !== 'date' &&
+              {aggType === 'range' &&
               <Form.Item
                 label="聚合值"
                 name="interval"
@@ -238,7 +240,7 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
               sm={24}
             >
               <Form.Item
-                label="计算维度"
+                label="统计字段"
                 name="calculate_fields"
               >
                 <Select
@@ -273,7 +275,7 @@ const OpRecent = ({fieldsData, resultData, resultType, resultCols, submitting, d
         </Card>
       </PageContainer>
       <FooterToolbar>
-        <Button type="primary" onClick={() => form?.submit()}>
+        <Button type="primary" onClick={() => form?.submit()} loading={submitting}>
           提交
         </Button>
       </FooterToolbar>

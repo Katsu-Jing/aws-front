@@ -41,12 +41,14 @@ export default [
                 name: '近七天数据',
                 icon: 'smile',
                 path: '/operator/recent',
+                authority: ['operator'],
                 component: './OpRecent',
               },
               {
                 name: '全部历史数据',
                 icon: 'smile',
                 path: '/operator/history',
+                authority: ['operator'],
                 component: './OpHistory',
               },
               {

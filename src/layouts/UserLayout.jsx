@@ -42,13 +42,13 @@ const UserLayout = (props) => {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Taxi Poc</span>
+                <span className={styles.title}>Baymax</span>
               </Link>
             </div>
             <div className={styles.desc}>
               <FormattedMessage
                 id="pages.layouts.userLayout.title"
-                defaultMessage="Taxi Poc 是一个出租车数据分析平台"
+                defaultMessage="Baymax Poc 是一个出租车数据分析平台"
               />
             </div>
           </div>

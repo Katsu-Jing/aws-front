@@ -39,6 +39,9 @@ class SecurityLayout extends React.Component {
       return <Redirect to={`/user/login?${queryString}`} />;
     }
 
+    if (window.location.pathname === '/') {
+      return currentUser.role === 'driver' ? <Redirect to={'/driver'}/> : <Redirect to={'/operator/heatmap'}/>
+    }
     return children;
   }
 }

@@ -1,4 +1,5 @@
 import {opHeat} from "@/services/heat";
+import moment from "moment";
 
 const OpHeatModel = {
   namespace: 'opHeat',
@@ -27,7 +28,10 @@ const OpHeatModel = {
         current,
         last,
         predict,
-        timestampInfo: {newest: timestamp_info.newest, max: timestamp_info.now_max}
+        timestampInfo: {
+          newest: moment(timestamp_info.newest).format('YYYY/MM/DD HH:mm:ss'),
+          max: moment(timestamp_info.now_max).format('YYYY/MM/DD HH:mm:ss')
+        }
       }
     },
 

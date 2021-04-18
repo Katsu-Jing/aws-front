@@ -48,8 +48,12 @@ const Model = {
       });
       console.log(payload, queryParams);
       const resp = yield call(submitForm, queryParams);
-      yield put({type: 'updateResult', payload: resp});
-      message.success('提交成功');
+      if (resp.msg !== null && resp.msg !== undefined && resp.msg !== '') {
+        message.error(resp.msg);
+      } else {
+        yield put({type: 'updateResult', payload: resp});
+        message.success('提交成功');
+      }
     },
   },
 

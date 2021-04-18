@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {PageContainer} from '@ant-design/pro-layout';
-import {Card} from 'antd';
+import {Affix, Anchor, Button, Card, message, Space} from 'antd';
 import {MapboxScene, HeatmapLayer} from '@antv/l7-react';
 import {connect} from 'umi';
 
@@ -18,6 +18,8 @@ const OpHeatmap = (props) => {
   const [activeHeap, setActiveHeap] = useState("current");
 
   const {dispatch, opHeatmap} = props;
+
+  const {timestampInfo: {newest, max}} = opHeatmap;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -83,6 +85,12 @@ const OpHeatmap = (props) => {
           />
         </MapboxScene>
       </Card>
+      <Affix style={{ position: 'absolute', bottom: 50, right: 50 }}>
+        <Space>
+          <Button>{'当前时间：'}{newest}</Button>
+          <Button>{'已经处理到：'}{max}</Button>
+        </Space>
+      </Affix>
     </PageContainer>
   );
 };

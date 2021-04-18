@@ -115,7 +115,9 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
       if (item !== undefined) {
         setAggType(item.field_type);
         if (item.field_type === 'date') {
-          setIntervalUnit('day');
+          if (intervalUnit === '') {
+            setIntervalUnit('day');
+          }
         } else {
           setIntervalUnit('');
         }
@@ -134,6 +136,7 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
   };
 
   const onIntChange = (v) => {
+    console.log(v);
     setIntervalUnit(v);
   }
 
@@ -172,7 +175,7 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
                 <Select placeholder="请选择">
                   {
                     (fieldsData || [])
-                      .filter(item => item.field_type !== 'terms' && item.field_type !== 'text')
+                      .filter(item => item.field_type !== 'text')
                       .map((item) => (<Option value={item.field_name} key={item.field_name}>{item.name}</Option>))
                   }
                 </Select>
@@ -193,7 +196,7 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
                 name="interval"
               ><Input placeholder="聚合值" type="number" addonAfter={selectAfter}/>
               </Form.Item>}
-              {aggType !== 'date' &&
+              {aggType === 'range' &&
               <Form.Item
                 label="聚合值"
                 name="interval"
@@ -240,7 +243,7 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
               sm={24}
             >
               <Form.Item
-                label="计算维度"
+                label="统计字段"
                 name="calculate_fields"
               >
                 <Select
@@ -275,7 +278,7 @@ const OpHistory = ({fieldsData, resultData, resultType, resultCols, submitting, 
         </Card>
       </PageContainer>
       <FooterToolbar>
-        <Button type="primary" onClick={() => form?.submit()}>
+        <Button type="primary" onClick={() => form?.submit()} loading={submitting}>
           提交
         </Button>
       </FooterToolbar>

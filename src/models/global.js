@@ -7,7 +7,9 @@ const GlobalModel = {
     authority: {
       '/driver': ['driver'],
       '/operator/heatmap': ['operator'],
-      '/operator/select': ['operator']
+      '/operator/select': ['operator'],
+      '/operator/recent': ['operator'],
+      '/operator/history': ['operator'],
     }
   },
   effects: {
